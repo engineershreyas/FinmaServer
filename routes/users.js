@@ -38,9 +38,26 @@ router.post('/login', function(req,res,next){
   var email = req.body.email;
   var password = req.body.password;
 
-  User.findOne({'username' : username}, 'username passwordHash', function(err,user){
+  User.findOne({'email' : email}, 'email passwordHash', function(err,user){
+
+
 
     if(err) return next(err);
+
+    if(user === null){
+
+      var response = {
+        status: 'ERROR',
+        message: 'user does not exist!'
+      };
+
+      console.log("no existing user");
+
+      res.status(200).send(response);
+
+      return;
+
+    }
 
     var hash = user.passwordHash;
 
