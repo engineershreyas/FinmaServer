@@ -40,7 +40,7 @@ router.post('/login', function(req,res,next){
 
   User.findOne({'email' : email}, 'email passwordHash', function(err,user){
 
-
+    var statusCode = 200;
 
     if(err) return next(err);
 
@@ -51,9 +51,7 @@ router.post('/login', function(req,res,next){
         message: 'user does not exist!'
       };
 
-      console.log("no existing user");
-
-      res.status(200).send(response);
+      res.status(statusCode).send(response);
 
       return;
 
@@ -63,7 +61,7 @@ router.post('/login', function(req,res,next){
 
     var success = passwordHasher.verify(password,hash);
 
-    var statusCode = success ? 200 : 401;
+
 
     var response = {
       status: success ? 'OK' : 'ERROR',
