@@ -11,13 +11,18 @@ router.get('/',function(req,res,next){
   console.log("swag");
 
 });
+
+
 router.post('/register',function(req,res,next){
 
   //handle missed params on client side
 
+  var emailP = req.body.email;
+  var password = req.body.password;
+
   var user = {
-    email: req.body.email,
-    passwordHash: passwordHasher.generate(req.body.password)
+    email: emailP,
+    passHash: passwordHasher.generate(password)
   };
 
   User.create(user, function(err, user){
@@ -38,7 +43,7 @@ router.post('/login', function(req,res,next){
   var email = req.body.email;
   var password = req.body.password;
 
-  User.findOne({'email' : email}, 'email passwordHash', function(err,user){
+  User.findOne({'email' : email}, 'email passHash', function(err,user){
 
     var statusCode = 200;
 
@@ -57,7 +62,8 @@ router.post('/login', function(req,res,next){
 
     }
 
-    var hash = user.passwordHash;
+    var hash = user.passHash;
+
 
     var success = passwordHasher.verify(password,hash);
 

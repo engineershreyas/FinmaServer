@@ -5,8 +5,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var app = express();
+
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+//app.use(cookieParser());
 
 var users = require('./routes/users');
+
+var http = require('http').Server(app);
+
+
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/ngb_db',function(err) {
@@ -18,15 +28,11 @@ mongoose.connect('mongodb://localhost/ngb_db',function(err) {
   console.log('Successfully connected to MongoDB');
 });
 
-var app = express();
 
-var http = require('http').Server(app);
+
 http.listen(PORT, function() {
   console.log('Listening on port 3000');
 });
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 
 app.use('/users',users);
 
