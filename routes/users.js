@@ -17,10 +17,12 @@ router.post('/register',function(req,res,next){
 
   //handle missed params on client side
 
+  var nameP = req.body.name;
   var emailP = req.body.email;
   var password = req.body.password;
 
   var user = {
+    name: nameP,
     email: emailP,
     passHash: passwordHasher.generate(password)
   };
@@ -43,7 +45,7 @@ router.post('/login', function(req,res,next){
   var email = req.body.email;
   var password = req.body.password;
 
-  User.findOne({'email' : email}, 'email passHash', function(err,user){
+  User.findOne({'email' : email}, 'name email passHash', function(err,user){
 
     var statusCode = 200;
 
@@ -53,7 +55,7 @@ router.post('/login', function(req,res,next){
 
       var response = {
         status: 'ERROR',
-        message: 'user does not exist!'
+        message: 'email or password does not match'
       };
 
       res.status(statusCode).send(response);
@@ -71,7 +73,7 @@ router.post('/login', function(req,res,next){
 
     var response = {
       status: success ? 'OK' : 'ERROR',
-      message: success ? 'login successful' : 'wrong password'
+      message: success ? 'login successful' : 'email or password does not match'
     };
 
     if(success){
