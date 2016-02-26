@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 //app.use(cookieParser());
 
 var users = require('./routes/users');
+var budget = require('./routes/budget');
 
 var http = require('http').Server(app);
 
@@ -35,5 +36,6 @@ http.listen(PORT, function() {
 });
 
 app.use('/users',users);
+app.use('/budget',budget);
 
 module.exports = app;
