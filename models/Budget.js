@@ -4,7 +4,7 @@ var BudgetSchema = new mongoose.Schema({
     userId: {type: String, required: true},
     budgetName: {type: String, required: true, unique: true},
     endDate: {type: Date, required: true},
-    //indices = 0 : food, 1 : travel, 2 : clothes, 3 : utilities, 4 : electronics, 5 : miscellaneous
+    //indices = 0 : food, 1 : travel, 2 : clothes, 3 : utilities, 4 : miscellaneous
     planData: {type: [Number], required: true},
     usedData: {type: [Number], required: true}
 });

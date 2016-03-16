@@ -37,4 +37,39 @@ router.post('/createBudget',function(req,res,next){
 
 });
 
+router.get('/findAllBudgets', function(req,res,next){
+
+  Budget.find({},function(err,budgets){
+
+    if(err) return next(err);
+
+    console.log("returning budgets with length" + budgets.length + "\n");
+
+    res.status(201).json(budgets);
+
+  });
+
+});
+
+router.get('/findBudgets', function(req,res,next){
+
+
+
+  var id = req.query.id;
+
+
+
+  Budget.find({userId : id},function(err,budgets){
+
+    if(err) return next(err);
+
+    
+
+    res.status(201).json(budgets);
+
+  });
+
+
+  });
+
 module.exports = router;

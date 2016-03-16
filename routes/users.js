@@ -6,11 +6,7 @@ var passwordHasher = require('password-hash');
 var mongoose = require('mongoose');
 
 var User = require('../models/User.js');
-router.get('/',function(req,res,next){
 
-  console.log("swag");
-
-});
 
 
 router.post('/register',function(req,res,next){
@@ -45,7 +41,7 @@ router.post('/login', function(req,res,next){
   var email = req.body.email;
   var password = req.body.password;
 
-  User.findOne({'email' : email}, 'name email passHash', function(err,user){
+  User.findOne({'email' : email}, '_id name email passHash', function(err,user){
 
     var statusCode = 200;
 
